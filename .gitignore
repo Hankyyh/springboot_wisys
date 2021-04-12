@@ -1,5 +1,9 @@
-# Maven target folder
+# Unnecessary project file/folder
 target/
+.classpath
+.project
+.settings/
+.vscode/
 
 # Compiled class file
 *.class
