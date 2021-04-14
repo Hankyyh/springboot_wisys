@@ -51,6 +51,6 @@ public class BaseDevice {
 
     @Override
 	public String toString() {
-        return String.format("[BaseDevice ID-%d Serial Number-%s MAC Address-%s\n", pid, serialNum, macAddr);
+        return String.format("<%s> ID-%d Serial Number-%s MAC Address-%s\n", this.getClass().getSimpleName(), pid, serialNum, macAddr);
 	}
 }
