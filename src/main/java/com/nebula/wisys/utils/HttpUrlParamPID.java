@@ -1,10 +1,13 @@
 package com.nebula.wisys.utils;
 
+import java.util.Objects;
+
+import org.bson.types.ObjectId;
 
 public class HttpUrlParamPID {
 
     private String pidStr;
-    private Long pid;
+    private ObjectId pid;
     private HttpUrlParamPIDType pidType;
 
 	private void convertPIDFromStringToLong() {
@@ -12,10 +15,9 @@ public class HttpUrlParamPID {
 			this.pidType = HttpUrlParamPIDType.PID_TYPE_ALL;
 		} else {
 			try {
-				this.pid = Long.parseLong(this.pidStr);
-				this.pid = (this.pid <= 0L) ? -1L : this.pid;
+				this.pid = new ObjectId(this.pidStr);
 				this.pidType = HttpUrlParamPIDType.PID_TYPE_REGULAR;
-			} catch(NumberFormatException e) {
+			} catch(IllegalArgumentException e) {
 				this.pidType = HttpUrlParamPIDType.PID_TYPE_INVALID;
 			}
 		}
@@ -23,7 +25,7 @@ public class HttpUrlParamPID {
 
 	private void updatePID(String pidStr) {
         this.pidStr = pidStr;
-        this.pid = -1L;
+        this.pid = null;
 		this.pidType = HttpUrlParamPIDType.PID_TYPE_INVALID;
 		this.convertPIDFromStringToLong();
 	}
@@ -32,7 +34,7 @@ public class HttpUrlParamPID {
 		this.updatePID(pidStr);
     }
 
-	public Long getPID() {
+	public ObjectId getPID() {
 		return this.pid;
 	}
 
@@ -49,11 +51,12 @@ public class HttpUrlParamPID {
 	}
 
 	public boolean isPIDRegular() {
-		return (this.pidType == HttpUrlParamPIDType.PID_TYPE_ALL);
+		return (this.pidType == HttpUrlParamPIDType.PID_TYPE_REGULAR);
 	}
 
     @Override
 	public String toString() {
-        return String.format("<%s> Str:%s Type:%s Value:%d\n", this.getClass().getSimpleName(), this.pidStr, this.pidType.toString(), this.pid);
+        return String.format("%s <Str:%s|Type:%s|ObjectId:%s>\n", this.getClass().getSimpleName(),
+			Objects.toString(pidStr, "null"), Objects.toString(pidType, "null"), Objects.toString(pid, "null"));
 	}
 }

@@ -1,35 +1,41 @@
 package com.nebula.wisys.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@Entity
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.nebula.wisys.utils.ObjectIdJsonSerializer;
+
+@Document(collection = "base_device")
 public class BaseDevice {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @JsonProperty("pid")
-	private Long pid;
-    @JsonProperty("snum")
+    @Id @JsonProperty("pid")
+    @JsonSerialize(using = ObjectIdJsonSerializer.class)
+	private ObjectId pid;
+    @Field("snum") @JsonProperty("snum")
 	private String serialNum;
-    @JsonProperty("mac")
+    @Field("mac") @JsonProperty("mac")
 	private String macAddr;
 
     public BaseDevice() {}
 
-    public BaseDevice(Long pid, String serialNum, String macAddr) {
+    public BaseDevice(ObjectId pid, String serialNum, String macAddr) {
         this.pid = pid;
         this.serialNum = serialNum;
         this.macAddr = macAddr;
     }
 
-    public Long getPID() {
-        return pid;
+    public ObjectId getPID() {
+        return this.pid;
     }
 
-    public void setPID(Long pid) {
+    public void setPID(ObjectId pid) {
         this.pid = pid;
     }
 
@@ -51,6 +57,7 @@ public class BaseDevice {
 
     @Override
 	public String toString() {
-        return String.format("<%s> ID-%d Serial Number-%s MAC Address-%s\n", this.getClass().getSimpleName(), pid, serialNum, macAddr);
+        return String.format("%s <ID:%s|SN:%s|MAC:%s>\n", this.getClass().getSimpleName(), 
+            Objects.toString(this.pid, "null"), Objects.toString(this.serialNum, "null"), Objects.toString(this.macAddr, "null"));
 	}
 }
