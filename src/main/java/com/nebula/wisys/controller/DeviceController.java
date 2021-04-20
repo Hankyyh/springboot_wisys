@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,28 +21,31 @@ public class DeviceController {
 
     final static Logger logger = LoggerFactory.getLogger(DeviceController.class);
 	
-	@Autowired
-	private BaseDeviceService deviceService;
+	@Qualifier("baseDeviceService")
+	private BaseDeviceService baseDeviceService;
     
-	public DeviceController() {}
+	@Autowired
+	public DeviceController(BaseDeviceService baseDeviceService) {
+		this.baseDeviceService = baseDeviceService;
+	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET) 
 	public List<BaseDevice> get(@RequestParam(name = "pid") String pidStr) {
-		return deviceService.getBaseDeviceByPID(pidStr);
+		return baseDeviceService.getBaseDeviceByPID(pidStr);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST) 
 	public BaseDevice create(@RequestBody BaseDevice baseDevice) {
-		return deviceService.createBaseDevice(baseDevice);
+		return baseDeviceService.createBaseDevice(baseDevice);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT) 
 	public BaseDevice update(@RequestBody BaseDevice baseDevice) {
-		return deviceService.updateBaseDevice(baseDevice);
+		return baseDeviceService.updateBaseDevice(baseDevice);
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.DELETE) 
 	public List<BaseDevice> delete(@RequestParam(name = "pid") String pidStr) {
-		return deviceService.deleteBaseDeviceByPID(pidStr);
+		return baseDeviceService.deleteBaseDeviceByPID(pidStr);
 	}
 }

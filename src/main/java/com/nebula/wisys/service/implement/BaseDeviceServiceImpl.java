@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.nebula.wisys.model.BaseDevice;
-import com.nebula.wisys.repository.BaseDeviceRepository;
+import com.nebula.wisys.repository.BaseDeviceRepo;
 import com.nebula.wisys.service.BaseDeviceService;
 import com.nebula.wisys.utils.HttpUrlParamPID;
 
@@ -19,8 +20,13 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
 
     final static Logger logger = LoggerFactory.getLogger(BaseDeviceServiceImpl.class);
 
+	@Qualifier("baseDeviceRepo")
+	private BaseDeviceRepo baseDeviceRepo;
+
 	@Autowired
-	private BaseDeviceRepository baseDeviceRepo;
+	public BaseDeviceServiceImpl(BaseDeviceRepo baseDeviceRepo) {
+		this.baseDeviceRepo = baseDeviceRepo;
+	}
 
     @Override
     public List<BaseDevice> getBaseDeviceByPID(String pidStr) {
@@ -41,7 +47,7 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
     @Override
 	public BaseDevice createBaseDevice(BaseDevice baseDevice) {
 		logger.debug("[POST-START] " + baseDevice.toString());
-		BaseDevice createdDevice = baseDeviceRepo.insert(baseDevice);
+		BaseDevice createdDevice = baseDeviceRepo.create(baseDevice);
 		logger.debug("[POST-END] " + createdDevice.toString());
 		return baseDevice;
     }
@@ -55,7 +61,7 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
 		} else if (baseDeviceRepo.findByPID(baseDevice.getPID()).size() == 0) {
 			logger.error("PID is not found: " + baseDevice.getPID().toString());
 		} else {
-			updatedDevice = baseDeviceRepo.save(baseDevice);
+			updatedDevice = baseDeviceRepo.update(baseDevice);
 		}
 		logger.debug("[PUT-END] Updated " + Objects.toString(updatedDevice, "no device"));
 		return baseDevice.getPID() == null ? null : baseDevice;
@@ -67,7 +73,7 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
 		HttpUrlParamPID paramPID = new HttpUrlParamPID(pidStr);
 		logger.debug("[DELETE-START] " + paramPID.toString());
 		if (paramPID.isPIDForAll()) {
-			baseDeviceRepo.deleteAll();
+			baseDeviceList = baseDeviceRepo.deleteAll();
 		} else if (paramPID.isPIDRegular()) {
 			baseDeviceList = baseDeviceRepo.deleteByPID(paramPID.getPID());
 		} else {
