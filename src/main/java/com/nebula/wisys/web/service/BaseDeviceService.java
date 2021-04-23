@@ -1,8 +1,8 @@
-package com.nebula.wisys.service;
+package com.nebula.wisys.web.service;
 
 import java.util.List;
 
-import com.nebula.wisys.model.BaseDevice;
+import com.nebula.wisys.persistence.model.BaseDevice;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 

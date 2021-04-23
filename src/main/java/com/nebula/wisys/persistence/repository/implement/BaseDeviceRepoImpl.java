@@ -1,4 +1,4 @@
-package com.nebula.wisys.repository.implement;
+package com.nebula.wisys.persistence.repository.implement;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import com.nebula.wisys.model.BaseDevice;
-import com.nebula.wisys.repository.BaseDeviceRepo;
+import com.nebula.wisys.persistence.model.BaseDevice;
+import com.nebula.wisys.persistence.repository.BaseDeviceRepo;
 
 @Repository
 public class BaseDeviceRepoImpl implements BaseDeviceRepo {

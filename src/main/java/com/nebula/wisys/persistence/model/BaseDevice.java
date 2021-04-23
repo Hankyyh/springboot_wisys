@@ -1,4 +1,4 @@
-package com.nebula.wisys.model;
+package com.nebula.wisys.persistence.model;
 
 import java.util.Objects;
 

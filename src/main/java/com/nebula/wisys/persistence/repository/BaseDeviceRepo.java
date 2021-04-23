@@ -1,11 +1,11 @@
-package com.nebula.wisys.repository;
+package com.nebula.wisys.persistence.repository;
 
 import java.util.List;
 
+import com.nebula.wisys.persistence.model.BaseDevice;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.nebula.wisys.model.BaseDevice;
 
 @Qualifier("baseDeviceRepo")
 public interface BaseDeviceRepo {

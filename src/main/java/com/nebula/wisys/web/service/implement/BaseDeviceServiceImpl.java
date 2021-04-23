@@ -1,4 +1,4 @@
-package com.nebula.wisys.service.implement;
+package com.nebula.wisys.web.service.implement;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.nebula.wisys.model.BaseDevice;
-import com.nebula.wisys.repository.BaseDeviceRepo;
-import com.nebula.wisys.service.BaseDeviceService;
+import com.nebula.wisys.persistence.model.BaseDevice;
+import com.nebula.wisys.persistence.repository.BaseDeviceRepo;
 import com.nebula.wisys.utils.HttpUrlParamPID;
+import com.nebula.wisys.web.service.BaseDeviceService;
 
 @Service
 public class BaseDeviceServiceImpl implements BaseDeviceService {
