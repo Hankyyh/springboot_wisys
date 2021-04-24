@@ -1,12 +1,15 @@
 package com.nebula.wisys.web.response;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiResponse {
+public class ApiResponse implements Serializable {
     
     @JsonProperty("status")
     private HttpStatus status;
@@ -49,5 +52,11 @@ public class ApiResponse {
 
     public void setPayload(Object payload) {
         this.payload = payload;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Status:%d | Message:%s | Payload:%.20s...",
+            getStatus(), Objects.toString(getMessage(), "null"), Objects.toString(getPayload(), "null"));
     }
 }

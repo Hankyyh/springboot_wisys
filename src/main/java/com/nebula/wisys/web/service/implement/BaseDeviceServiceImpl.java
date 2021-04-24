@@ -38,7 +38,7 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
 		} else if (paramPID.isPIDRegular()) {
 			baseDeviceList.addAll(baseDeviceRepo.findByPID(paramPID.getPID()));
 		} else {
-			logger.warn(String.format("Failed to convert PID string %s to a valid bson ObjectId", pidStr));
+			logger.error(String.format("Failed to convert PID string %s to a valid bson ObjectId", pidStr));
 		}
 		logger.debug("[GET-END] Result Cnt: " + baseDeviceList.size());
 		return baseDeviceList;

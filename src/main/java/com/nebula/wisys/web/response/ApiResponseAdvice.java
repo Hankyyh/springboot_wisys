@@ -21,8 +21,9 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
 
 	@Nullable
 	public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, 
-    Class<? extends HttpMessageConverter<?>> selectedConverterType, 
-    ServerHttpRequest request, ServerHttpResponse response) {
+            Class<? extends HttpMessageConverter<?>> selectedConverterType, 
+            ServerHttpRequest request, ServerHttpResponse response) {
+
         Object apiResponse;
         HttpStatus httpResponseStatus = HttpStatus.valueOf(((ServletServerHttpResponse) response).getServletResponse().getStatus());
         if (!(body instanceof ApiResponse) || body == null) {
@@ -32,12 +33,9 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
             // payload: input body
             apiResponse = new ApiResponse(httpResponseStatus, httpResponseStatus.getReasonPhrase(), body);
         } else {
-            // override http response status code if status code in api response body is in unified struct
+            // override api response status code using existed http response
             apiResponse = body;
-            int apiResponseStatusCode = ((ApiResponse)apiResponse).getStatus();
-            if (apiResponseStatusCode > 0) {
-                response.setStatusCode(HttpStatus.valueOf(apiResponseStatusCode));
-            }
+            ((ApiResponse) apiResponse).setStatus(httpResponseStatus);
         }
         return apiResponse;
     }
