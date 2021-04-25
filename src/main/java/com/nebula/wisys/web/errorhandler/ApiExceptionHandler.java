@@ -1,5 +1,6 @@
 package com.nebula.wisys.web.errorhandler;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Set;
 
@@ -9,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -236,6 +239,29 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorMessage, headers, status, request);
     }
 
+	// Access denied (e.g. FS) exception handler - HttpStatus status = HttpStatus.FORBIDDEN 403
+	@ExceptionHandler({ AccessDeniedException.class })
+    public ResponseEntity<Object> handleAccessDeniedException(final Exception ex, final WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.FORBIDDEN;
+
+        String errorMessage = String.format("%s for %s (user %s) - %s",
+			ex.getClass().getName(), request.toString(), request.getUserPrincipal(), ex.getLocalizedMessage());
+
+        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+    }
+
+    // Data access exception handler - HttpStatus.CONFLICT 409
+    @ExceptionHandler({ InvalidDataAccessApiUsageException.class, DataAccessException.class })
+    protected ResponseEntity<Object> handleDataAccessException(final RuntimeException ex, final WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        String errorMessage = String.format("%s for %s - %s", ex.getClass().getName(), request.toString(), ex.getLocalizedMessage());
+
+        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+    }
+
     // MongoDB exception handler - HttpStatus.INTERNAL_SERVER_ERROR 500
     @ExceptionHandler({ MongoException.class })
     public ResponseEntity<Object> handleMongoException(final Exception ex, final WebRequest request) {
@@ -247,6 +273,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorMessage, headers, status, request);
     }
 
+	// Illegal action exception handler - HttpStatus.INTERNAL_SERVER_ERROR 500
+    @ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class })
+    public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        String errorMessage = String.format("%s for %s - %s", ex.getClass().getName(), request.toString(), ex.getLocalizedMessage());
+
+        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+    }
 
     // Default exception handler - HttpStatus.INTERNAL_SERVER_ERROR 500
     @ExceptionHandler({ Exception.class })
