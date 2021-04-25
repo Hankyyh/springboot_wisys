@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +31,7 @@ public class DeviceController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET) 
-	public ApiResponse get(@RequestParam(name = "pid") String pidStr) {
+	public ApiResponse get(@RequestParam(name = "pid") String pidStr) throws MissingServletRequestParameterException {
 		return new ApiResponse(HttpStatus.OK, null, baseDeviceService.getBaseDeviceByPID(pidStr));
 	}
 
@@ -40,12 +41,12 @@ public class DeviceController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT) 
-	public ApiResponse update(@RequestBody BaseDevice baseDevice) {
+	public ApiResponse update(@RequestBody BaseDevice baseDevice) throws MissingServletRequestParameterException {
 		return new ApiResponse(HttpStatus.OK, null, baseDeviceService.updateBaseDevice(baseDevice));
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.DELETE) 
-	public ApiResponse delete(@RequestParam(name = "pid") String pidStr) {
+	public ApiResponse delete(@RequestParam(name = "pid") String pidStr) throws MissingServletRequestParameterException {
 		return new ApiResponse(HttpStatus.OK, null, baseDeviceService.deleteBaseDeviceByPID(pidStr));
 	}
 }

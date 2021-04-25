@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -223,6 +224,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, null, headers, status, webRequest);
 	}
 
+
+    // Input data integrity violation exception handler - HttpStatus.BAD_REQUEST 400
+    @ExceptionHandler({ DataIntegrityViolationException.class })
+    public ResponseEntity<Object> handleDAOException(final Exception ex, final WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        String errorMessage = String.format("%s for %s - %s", ex.getClass().getName(), request.toString(), ex.getLocalizedMessage());
+
+        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+    }
 
     // MongoDB exception handler - HttpStatus.INTERNAL_SERVER_ERROR 500
     @ExceptionHandler({ MongoException.class })
