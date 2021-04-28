@@ -21,7 +21,7 @@ import com.nebula.wisys.web.service.BaseDeviceService;
 public class DeviceController {
 
     final static Logger logger = LoggerFactory.getLogger(DeviceController.class);
-	
+
 	@Qualifier("baseDeviceService")
 	private BaseDeviceService baseDeviceService;
     

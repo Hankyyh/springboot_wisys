@@ -8,7 +8,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMessageConvererConfig implements WebMvcConfigurer {
+public class WebMessageConverterConfig implements WebMvcConfigurer {
     
     // To handle String type case in http response processing
     @Override
