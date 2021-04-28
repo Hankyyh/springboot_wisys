@@ -1,4 +1,4 @@
-package com.nebula.wisys.scheduling.async;
+package com.nebula.wisys.threading.async;
 
 import java.util.concurrent.Executor;
 
@@ -15,16 +15,16 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @EnableAsync
 public class AsyncTaskConfig implements AsyncConfigurer {
 
-    @Value("${scheduling.async.thread.exec.core.pool:5}")
+    @Value("${threading.async.thread.exec.core.pool:5}")
     private int threadPoolExecutorCorePoolSize;
 
-    @Value("${scheduling.async.thread.exec.max.pool:64}")
+    @Value("${threading.async.thread.exec.max.pool:64}")
     private int threadPoolExecutorMaxPoolSize;
 
-    @Value("${scheduling.async.thread.exec.queue.cap:512}")
+    @Value("${threading.async.thread.exec.queue.cap:512}")
     private int threadPoolExecutorQueueCapacity;
 
-    @Value("${scheduling.async.thread.exec.name.prefix:asyncThreadPoolTaskExecutor}")
+    @Value("${threading.async.thread.exec.name.prefix:asyncThreadPoolTaskExecutor}")
     private String threadPoolExecutorNamePrefix;
     
     @Bean(name = "asyncThreadPoolTaskExecutor")

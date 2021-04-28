@@ -3,26 +3,27 @@ package com.nebula.wisys.async;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import com.nebula.wisys.threading.async.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 
-import com.nebula.wisys.scheduling.async.*;
-
-@ComponentScan("com.nebula.wisys.scheduling.async")
-@ContextConfiguration(classes = { AsyncTaskConfig.class }, loader = AnnotationConfigContextLoader.class)
+@SpringBootTest
 public class AsyncTaskExampleTest {
 
     final static Logger logger = LoggerFactory.getLogger(AsyncTaskExampleTest.class);
 
-    @Autowired
     @Qualifier("asyncTaskImpl")
     private AsyncTaskImpl asyncTaskExample;
+
+    @Autowired
+    public AsyncTaskExampleTest(AsyncTaskImpl asyncTaskExample) {
+        this.asyncTaskExample = asyncTaskExample;
+    }
 
     @Test
     public void testAsyncAnnotationForMethodsWithVoidReturnType() {

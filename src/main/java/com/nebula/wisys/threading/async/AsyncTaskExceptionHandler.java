@@ -1,4 +1,4 @@
-package com.nebula.wisys.scheduling.async;
+package com.nebula.wisys.threading.async;
 
 import java.lang.reflect.Method;
 
