@@ -14,19 +14,19 @@ public class ScheduledTaskImpl {
     static private long fixedRateCnt = 0;
     static private long cronCnt = 0;
 
-    @Scheduled(fixedDelayString = "${scheduling.scheduled.delay.fixed:3000}",
-        initialDelayString = "${scheduling.scheduled.delay.intial:60000}")
+    @Scheduled(fixedDelayString = "${threading.scheduled.delay.fixed}",
+        initialDelayString = "${threading.scheduled.delay.initial}")
     public void scheduleFixedDelayTaskUsingExpression() {
         logger.info(String.format("Scheduled task: fixed delay count %d", fixedDelayCnt++));
     }
 
-    @Scheduled(fixedRateString = "${scheduling.scheduled.rate.fixed:60000}")
+    @Scheduled(fixedRateString = "${threading.scheduled.rate.fixed}")
     public void scheduleFixedRateTaskUsingExpression() {
         logger.info(String.format("Scheduled task: fixed rate count %d", fixedRateCnt++));
     }
 
     /*
-    @Scheduled(cron = "${scheduling.scheduled.cron.expression:0 15 10 15 * ?}")
+    @Scheduled(cron = "${threading.scheduled.cron.expression}")
     public void scheduleTaskUsingExternalizedCronExpression() {
         logger.info(String.format("Scheduled task: cron %d", cronCnt++));
     }
