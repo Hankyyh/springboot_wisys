@@ -17,7 +17,7 @@ public class AsyncTaskExampleTest {
 
     final static Logger logger = LoggerFactory.getLogger(AsyncTaskExampleTest.class);
 
-    @Qualifier("asyncTaskImpl")
+    @Qualifier("AsyncTaskImpl")
     private AsyncTaskImpl asyncTaskExample;
 
     @Autowired

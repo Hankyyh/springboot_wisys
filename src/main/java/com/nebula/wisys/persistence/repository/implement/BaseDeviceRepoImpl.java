@@ -13,7 +13,7 @@ import com.nebula.wisys.persistence.repository.BaseDeviceRepo;
 @Repository
 public class BaseDeviceRepoImpl implements BaseDeviceRepo {
 
-    @Qualifier("baseDeviceMongoRepo")
+    @Qualifier("BaseDeviceMongoRepo")
 	private BaseDeviceMongoRepo baseDeviceMongoRepo;
 
     @Autowired

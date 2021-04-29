@@ -7,7 +7,7 @@ import com.nebula.wisys.persistence.model.BaseDevice;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-@Qualifier("baseDeviceRepo")
+@Qualifier("BaseDeviceRepo")
 public interface BaseDeviceRepo {
     // GET
     public List<BaseDevice> findAll();

@@ -31,7 +31,7 @@ public class AsyncTaskConfig implements AsyncConfigurer {
     @Value("${threading.async.thread.exec.name.prefix}")
     private String threadPoolExecutorNamePrefix;
     
-    @Bean(name = "asyncThreadPoolTaskExecutor")
+    @Bean(name = "AsyncThreadPoolTaskExecutor")
     public Executor asyncThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(threadPoolExecutorCorePoolSize);

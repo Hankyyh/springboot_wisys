@@ -22,7 +22,7 @@ public class DeviceController {
 
     final static Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
-	@Qualifier("baseDeviceService")
+	@Qualifier("BaseDeviceService")
 	private BaseDeviceService baseDeviceService;
     
 	@Autowired

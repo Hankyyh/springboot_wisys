@@ -7,7 +7,7 @@ import com.nebula.wisys.persistence.model.BaseDevice;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
-@Qualifier("baseDeviceService")
+@Qualifier("BaseDeviceService")
 public interface BaseDeviceService {
 	List<BaseDevice> getBaseDeviceByPID(String pidStr) throws MissingServletRequestParameterException;
 	BaseDevice createBaseDevice(BaseDevice baseDevice);

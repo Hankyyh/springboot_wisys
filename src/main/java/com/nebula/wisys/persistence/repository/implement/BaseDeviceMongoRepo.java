@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.bson.types.ObjectId;
 
-@Qualifier("baseDeviceMongoRepo")
+@Qualifier("BaseDeviceMongoRepo")
 public interface BaseDeviceMongoRepo extends MongoRepository<BaseDevice, ObjectId> {
 
     @Query(value = "{'_id' : ?0}")

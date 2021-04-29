@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 @Component
-@Qualifier("asyncTaskImpl")
+@Qualifier("AsyncTaskImpl")
 @EnableAsync
 public class AsyncTaskImpl {
 
@@ -33,7 +33,7 @@ public class AsyncTaskImpl {
         return CompletableFuture.completedFuture(sleepMillisecond);
     }
 
-    @Async("asyncThreadPoolTaskExecutor")
+    @Async("AsyncThreadPoolTaskExecutor")
     public void asyncMethodWithConfiguredExecutor() {
         logger.info("Async task (asyncThreadPoolTaskExecutor) - " + Thread.currentThread().getName());
     }

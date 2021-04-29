@@ -21,7 +21,7 @@ public class BaseDeviceServiceImpl implements BaseDeviceService {
 
     final static Logger logger = LoggerFactory.getLogger(BaseDeviceServiceImpl.class);
 
-	@Qualifier("baseDeviceRepo")
+	@Qualifier("BaseDeviceRepo")
 	private BaseDeviceRepo baseDeviceRepo;
 
 	@Autowired

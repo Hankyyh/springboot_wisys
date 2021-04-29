@@ -12,7 +12,7 @@ public class ScheduledTaskImpl {
 
     static private long fixedDelayCnt = 0;
     static private long fixedRateCnt = 0;
-    static private long cronCnt = 0;
+    // static private long cronCnt = 0;
 
     @Scheduled(fixedDelayString = "${threading.scheduled.delay.fixed}",
         initialDelayString = "${threading.scheduled.delay.initial}")
